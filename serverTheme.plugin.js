@@ -23,6 +23,7 @@ serverTheme.prototype.load = function(){
 
     /* Functions */
     this.loadServerCSS = function(serverHash) {
+		// serverHash = "382353991884865546"
         this.getFileContent(this.themePath + serverHash+'.servertheme.css',this.injectCSS);
         console.log("Injected theme for server " + serverHash);
         $('#serverTheme-css').addClass('theme-'+serverHash);
@@ -30,7 +31,7 @@ serverTheme.prototype.load = function(){
     this.getCurrentServerHash = function() {
         var serverHash = null;
         try {
-            serverHash = $('.guild.selected a,.guild.active a').attr('href').split('/')[2];
+			serverHash = window.location.href.split('/')[4];
         } catch(e) {
             console.log("Failed to get server hash");
         }
