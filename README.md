@@ -16,7 +16,7 @@ THIS WILL ONLY WORK FOR BETTER DISCORD USERS
 3. In your themes folder, create a new file and name it **{{ServerID}}.servertheme.css**
 4. In this file, put any CSS that you want to be applied to the individual server.
 5. Save
-6. Rejoin the server
+6. Rejoin the server (CLARIFICATION: **DO NOT LEAVE AND REJOIN, JUST CLICK ON ANY CHANNEL WITHIN THE SERVER OR CLICK ON ANOTHER SERVER THEN CLICK ON THE SERVER**)
 
 ## Images
 ![https://share.md5.xyz/LNs14701940579Da.gif](https://share.md5.xyz/LNs14701940579Da.gif)
