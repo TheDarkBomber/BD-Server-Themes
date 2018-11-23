@@ -9,11 +9,13 @@ serverTheme.prototype.getDescription = function(){
     return 'Ability to use specific themes on individual servers.';
 };
 serverTheme.prototype.getVersion = function(){
-    return '1.0.0';
+    return '1.1.0';
 };
 serverTheme.prototype.getAuthor = function(){
-    return 'IRDeNial';
+    return 'IRDeNial, Caesar TheDarkBomber';
 };
+
+var lastKnownServerHash = null;
 
 serverTheme.prototype.load = function(){
     /* Variables */
@@ -24,14 +26,17 @@ serverTheme.prototype.load = function(){
     /* Functions */
     this.loadServerCSS = function(serverHash) {
 		// serverHash = "382353991884865546"
-        this.getFileContent(this.themePath + serverHash+'.servertheme.css',this.injectCSS);
-        console.log("Injected theme for server " + serverHash);
-        $('#serverTheme-css').addClass('theme-'+serverHash);
+		if (serverHash != lastKnownServerHash) {
+			this.getFileContent(this.themePath + serverHash+'.servertheme.css',this.injectCSS);
+			console.log("Injected theme for server " + serverHash);
+			$('#serverTheme-css').addClass('theme-'+serverHash);
+			lastKnownServerHash = serverHash;
+		}
     };
     this.getCurrentServerHash = function() {
-        var serverHash = null;
+        var serverHash = window.location.href.split('/')[4];
         try {
-			serverHash = window.location.href.split('/')[4];
+			// serverHash = window.location.href.split('/')[4];
         } catch(e) {
             console.log("Failed to get server hash");
         }
