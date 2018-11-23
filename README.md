@@ -23,10 +23,12 @@ THIS WILL ONLY WORK FOR BETTER DISCORD USERS
 
 ## To Do List
 * Write auto-update routine
-* Allow live changing of CSS so switching servers is not required in order to update
+* Allow live changing of CSS so switching servers is not required in order to update // Impossible to do.
+* Channel Specific Themes
 
 ## Contributors
 * [IRDeNial](https://github.com/IRDeNial/)
+* [Caesar](https://github.com/TheDarkBomber/)
 
 ## Contribution Guidelines
 * Document **ALL** code contributions
