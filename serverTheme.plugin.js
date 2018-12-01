@@ -16,10 +16,13 @@ serverTheme.prototype.getAuthor = function(){
 };
 
 var lastKnownServerHash = null;
+var Fs = require('fs');
+var CLR = false;
 
 serverTheme.prototype.load = function(){
     /* Variables */
     this.themePath = process.env.APPDATA + "\\BetterDiscord\\themes\\";
+	this.changelog = process.env.APPDATA + "\\BetterDiscord\\plugins\\" + "serverTheme.changelog";
     this.loaded = false;
     this.bdIsLoaded = false;
 
@@ -82,6 +85,21 @@ serverTheme.prototype.load = function(){
             return false;
         }
     };
+	this.checkchangelog = function() {
+		var currentLog = "Changelog for SST Yugoslavia Update (1.1.2):\n+ Channel Specific Themes\n+ Changelogs\n- Removal of obsolete functions within the code.";
+		try {
+			if(!Fs.existsSync(this.changelog)) {
+				Fs.writeFileSync(this.changelog, currentLog);
+				window.alert(currentLog, "Server Specific Themes 1.1.2");
+			}
+			else if(Fs.readFileSync(this.changelog) != currentLog) {
+				Fs.writeFileSync(this.changelog, currentLog);
+				window.alert(currentLog, "Server Specific Themes 1.1.2");
+			}
+		} catch(e) {
+				window.alert(e);
+		}
+	};
     this.setup = function() {
         try {
             this.loadSpecificCSS(window.location.href.split('/')[4]);
@@ -115,6 +133,7 @@ serverTheme.prototype.stop = function(){
     BdApi.clearCSS("serverTheme-css");
 };
 serverTheme.prototype.onSwitch = function(){
+	this.checkchangelog();
     this.setup();
 };
 serverTheme.prototype.observer = function(e){
