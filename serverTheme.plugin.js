@@ -6,33 +6,44 @@ serverTheme.prototype.getName = function(){
     return 'Server Specific Themes';
 };
 serverTheme.prototype.getDescription = function(){
-    return 'Ability to use specific themes on individual servers.';
+    return 'Ability to use specific themes on individual servers and channels.';
 };
 serverTheme.prototype.getVersion = function(){
-    return '1.1.0';
+    return '1.1.2';
 };
 serverTheme.prototype.getAuthor = function(){
     return 'IRDeNial, Caesar TheDarkBomber';
 };
 
 var lastKnownServerHash = null;
+var Fs = require('fs');
+var CLR = false;
 
 serverTheme.prototype.load = function(){
     /* Variables */
     this.themePath = process.env.APPDATA + "\\BetterDiscord\\themes\\";
+	this.changelog = process.env.APPDATA + "\\BetterDiscord\\plugins\\" + "serverTheme.changelog";
     this.loaded = false;
     this.bdIsLoaded = false;
 
     /* Functions */
-    this.loadServerCSS = function(serverHash) {
+    this.loadSpecificCSS = function(serverHash) {
 		// serverHash = "382353991884865546"
-		if (serverHash != lastKnownServerHash) {
+		if (this.doesFileExist(this.themePath + window.location.href.split('/')[5] + '.channeltheme.css')) {
+			this.getFileContent(this.themePath + window.location.href.split('/')[5] +'.channeltheme.css',this.injectCSS);
+			console.log("Injected theme for channel " + window.location.href.split('/')[5]);
+			$('#serverTheme-css').addClass('theme-'+window.location.href.split('/')[5]);
+			lastKnownServerHash = null;
+		}
+		else if (serverHash != lastKnownServerHash) {
 			this.getFileContent(this.themePath + serverHash+'.servertheme.css',this.injectCSS);
 			console.log("Injected theme for server " + serverHash);
 			$('#serverTheme-css').addClass('theme-'+serverHash);
 			lastKnownServerHash = serverHash;
 		}
     };
+	/*
+	Obsolete, we don't need a function just to get a variable as simple as window.location.href.split('/')[4].
     this.getCurrentServerHash = function() {
         var serverHash = window.location.href.split('/')[4];
         try {
@@ -42,6 +53,7 @@ serverTheme.prototype.load = function(){
         }
         return serverHash;
     };
+	*/
     this.injectCSS = function(buffer) {
         BdApi.clearCSS("serverTheme-css");
         BdApi.injectCSS("serverTheme-css", buffer.replace(/\/\/META{(.*)}\*\/\//,''));
@@ -73,13 +85,29 @@ serverTheme.prototype.load = function(){
             return false;
         }
     };
+	this.checkchangelog = function() {
+		var currentLog = "Changelog for SST Yugoslavia Update (1.1.2):\n+ Channel Specific Themes\n+ Changelogs\n- Removal of obsolete functions within the code.";
+		try {
+			if(!Fs.existsSync(this.changelog)) {
+				Fs.writeFileSync(this.changelog, currentLog);
+				window.alert(currentLog, "Server Specific Themes 1.1.2");
+			}
+			else if(Fs.readFileSync(this.changelog) != currentLog) {
+				Fs.writeFileSync(this.changelog, currentLog);
+				window.alert(currentLog, "Server Specific Themes 1.1.2");
+			}
+		} catch(e) {
+				window.alert(e);
+		}
+	};
     this.setup = function() {
         try {
-            this.loadServerCSS(this.getCurrentServerHash());
+            this.loadSpecificCSS(window.location.href.split('/')[4]);
         } catch(e) {
             console.log("Error setting up ServerTheme " + e);
         }
-        
+        /*
+		Doesn't actually do anything. Strange... Obsolete!
         if($('.server-css').length == 0) {
             $('.guild-header ul').prepend('<li><a class="server-css">Server CSS</a></li>');
 
@@ -95,6 +123,7 @@ serverTheme.prototype.load = function(){
                 require('child_process').exec('start "" "' + filePath +'"');
             });
         }
+		*/
     }
 };
 serverTheme.prototype.unload = function(){};
@@ -104,6 +133,7 @@ serverTheme.prototype.stop = function(){
     BdApi.clearCSS("serverTheme-css");
 };
 serverTheme.prototype.onSwitch = function(){
+	this.checkchangelog();
     this.setup();
 };
 serverTheme.prototype.observer = function(e){
