@@ -27,9 +27,6 @@ THIS WILL ONLY WORK FOR BETTER DISCORD USERS
 5. Save
 6. Click on the channel.
 
-## Images
-![https://share.md5.xyz/LNs14701940579Da.gif](https://share.md5.xyz/LNs14701940579Da.gif)
-
 ## To Do List
 * Write auto-update routine // Use PluginRepo
 * Allow live changing of CSS so switching servers is not required in order to update // Impossible to do.
