@@ -6,14 +6,16 @@ serverTheme.prototype.getName = function(){
     return 'Server Specific Themes';
 };
 serverTheme.prototype.getDescription = function(){
-    return 'Ability to use specific themes on individual servers.';
+    return 'Ability to use specific themes on individual servers and channels.';
 };
 serverTheme.prototype.getVersion = function(){
-    return '1.0.0';
+    return '1.1.1';
 };
 serverTheme.prototype.getAuthor = function(){
-    return '<a href="https://github.com/IRDeNial" target="_BLANK">DeNial</a>';
+    return 'IRDeNial, Caesar TheDarkBomber';
 };
+
+var lastKnownServerHash = null;
 
 serverTheme.prototype.load = function(){
     /* Variables */
@@ -22,15 +24,31 @@ serverTheme.prototype.load = function(){
     this.bdIsLoaded = false;
 
     /* Functions */
+	this.loadChannelCSS = function(serverHash) {
+		this.getFileContent(this.themePath + serverHash+'.channeltheme.css',this.injectCSS);
+		console.log("Injected theme for channel " + serverHash);
+		$('#serverTheme-css').addClass('theme-'+serverHash);
+		lastKnownServerHash = null;
+	}
     this.loadServerCSS = function(serverHash) {
-        this.getFileContent(this.themePath + serverHash+'.servertheme.css',this.injectCSS);
-        console.log("Injected theme for server " + serverHash);
-        $('#serverTheme-css').addClass('theme-'+serverHash);
+		// serverHash = "382353991884865546"
+		if (this.doesFileExist(this.themePath + window.location.href.split('/')[5] + '.channeltheme.css')) {
+			this.getFileContent(this.themePath + window.location.href.split('/')[5] +'.channeltheme.css',this.injectCSS);
+			console.log("Injected theme for channel " + window.location.href.split('/')[5]);
+			$('#serverTheme-css').addClass('theme-'+window.location.href.split('/')[5]);
+			lastKnownServerHash = null;
+		}
+		else if (serverHash != lastKnownServerHash) {
+			this.getFileContent(this.themePath + serverHash+'.servertheme.css',this.injectCSS);
+			console.log("Injected theme for server " + serverHash);
+			$('#serverTheme-css').addClass('theme-'+serverHash);
+			lastKnownServerHash = serverHash;
+		}
     };
     this.getCurrentServerHash = function() {
-        var serverHash = null;
+        var serverHash = window.location.href.split('/')[4];
         try {
-            serverHash = $('.guild.selected a,.guild.active a').attr('href').split('/')[2];
+			// serverHash = window.location.href.split('/')[4];
         } catch(e) {
             console.log("Failed to get server hash");
         }

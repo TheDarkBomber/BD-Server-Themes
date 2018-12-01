@@ -10,39 +10,38 @@ THIS WILL ONLY WORK FOR BETTER DISCORD USERS
 4. Restart BetterDiscord
 
 ## How to create themes
-There are two ways to create themes.
-
-#### Method #1:
-1. In discord, join the server that you want to create a theme for.
-2. Click on the **"BetterDiscord"** menu (Where the hamburger icon is, top left)
-3. Click **"Server CSS"**.  This should open the server CSS file with your default text editor.
-4. Save
-5. Rejoin the server
-
-#### Method #2:
 1. In Discord, open your settings, go to Appearance, and enable **Developer Mode**.
 2. In Discord, right click on the server that you want to create a theme for.  Then click **"Copy ID"**.  This will give you the server ID.
     * This will be referred to as {{ServerID}}.
 3. In your themes folder, create a new file and name it **{{ServerID}}.servertheme.css**
 4. In this file, put any CSS that you want to be applied to the individual server.
 5. Save
-6. Rejoin the server
+6. Rejoin the server (CLARIFICATION: **DO NOT LEAVE AND REJOIN, JUST CLICK ON ANY CHANNEL WITHIN THE SERVER OR CLICK ON ANOTHER SERVER THEN CLICK ON THE SERVER**)
+
+**For Channels:**
+1. In Discord, open your settings, go to Appearance, and enable **Developer Mode**.
+2. In Discord, right click on the channel that you want to create a theme for.  Then click **"Copy ID"**.  This will give you the channel ID.
+    * This will be referred to as {{ChannelID}}.
+3. In your themes folder, create a new file and name it **{{ChannelID}}.channeltheme.css**
+4. In this file, put any CSS that you want to be applied to the individual channel.
+5. Save
+6. Click on the channel.
 
 ## Images
-![https://share.md5.xyz/Akk1470196489AZ1.png](https://share.md5.xyz/Akk1470196489AZ1.png)
-
 ![https://share.md5.xyz/LNs14701940579Da.gif](https://share.md5.xyz/LNs14701940579Da.gif)
 
 ## To Do List
-* Write auto-update routine
-* Allow live changing of CSS so switching servers is not required in order to update
+* Write auto-update routine // Use PluginRepo
+* Allow live changing of CSS so switching servers is not required in order to update // Impossible to do.
+* Channel Specific Themes // Doing
 
 ## Contributors
 * [IRDeNial](https://github.com/IRDeNial/)
+* [Caesar](https://github.com/TheDarkBomber/)
 
 ## Contribution Guidelines
 * Document **ALL** code contributions
   * Anything undocumented will be ignored until full documentation is provided
   * **TEST** your code first.  Do not blindly contribute.
-  * Do NOT do a pull request into master, do it on **[dev](https://github.com/IRDeNial/BD-Server-Themes/tree/dev)** instead.
+  * Do NOT do a pull request into master, do it on **[dev](https://github.com/TheDarkBomber/BD-Server-Themes/tree/dev)** instead.
     * Your pull requests will be merged into master at each iteration if accepted.
