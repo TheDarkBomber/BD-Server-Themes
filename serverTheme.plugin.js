@@ -9,7 +9,7 @@ serverTheme.prototype.getDescription = function(){
     return 'Ability to use specific themes on individual servers and channels.';
 };
 serverTheme.prototype.getVersion = function(){
-    return '1.1.1';
+    return '1.1.2';
 };
 serverTheme.prototype.getAuthor = function(){
     return 'IRDeNial, Caesar TheDarkBomber';
@@ -24,13 +24,7 @@ serverTheme.prototype.load = function(){
     this.bdIsLoaded = false;
 
     /* Functions */
-	this.loadChannelCSS = function(serverHash) {
-		this.getFileContent(this.themePath + serverHash+'.channeltheme.css',this.injectCSS);
-		console.log("Injected theme for channel " + serverHash);
-		$('#serverTheme-css').addClass('theme-'+serverHash);
-		lastKnownServerHash = null;
-	}
-    this.loadServerCSS = function(serverHash) {
+    this.loadSpecificCSS = function(serverHash) {
 		// serverHash = "382353991884865546"
 		if (this.doesFileExist(this.themePath + window.location.href.split('/')[5] + '.channeltheme.css')) {
 			this.getFileContent(this.themePath + window.location.href.split('/')[5] +'.channeltheme.css',this.injectCSS);
@@ -45,6 +39,8 @@ serverTheme.prototype.load = function(){
 			lastKnownServerHash = serverHash;
 		}
     };
+	/*
+	Obsolete, we don't need a function just to get a variable as simple as window.location.href.split('/')[4].
     this.getCurrentServerHash = function() {
         var serverHash = window.location.href.split('/')[4];
         try {
@@ -54,6 +50,7 @@ serverTheme.prototype.load = function(){
         }
         return serverHash;
     };
+	*/
     this.injectCSS = function(buffer) {
         BdApi.clearCSS("serverTheme-css");
         BdApi.injectCSS("serverTheme-css", buffer.replace(/\/\/META{(.*)}\*\/\//,''));
@@ -87,11 +84,12 @@ serverTheme.prototype.load = function(){
     };
     this.setup = function() {
         try {
-            this.loadServerCSS(this.getCurrentServerHash());
+            this.loadSpecificCSS(window.location.href.split('/')[4]);
         } catch(e) {
             console.log("Error setting up ServerTheme " + e);
         }
-        
+        /*
+		Doesn't actually do anything. Strange... Obsolete!
         if($('.server-css').length == 0) {
             $('.guild-header ul').prepend('<li><a class="server-css">Server CSS</a></li>');
 
@@ -107,6 +105,7 @@ serverTheme.prototype.load = function(){
                 require('child_process').exec('start "" "' + filePath +'"');
             });
         }
+		*/
     }
 };
 serverTheme.prototype.unload = function(){};
