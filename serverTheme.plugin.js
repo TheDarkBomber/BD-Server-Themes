@@ -86,18 +86,18 @@ serverTheme.prototype.load = function(){
         }
     };
 	this.checkchangelog = function() {
-		var currentLog = "Changelog for SST Yugoslavia Update (1.1.2):\n+ Channel Specific Themes\n+ Changelogs\n- Removal of obsolete functions within the code.";
+		var currentLog = "<h1 style=\"color:#DD2211;\">Changelog for SST <b><i>Yugoslavia Update</i></h1> (1.1.2):<br><p style=\"color:MediumSeaGreen;\">+ Channel Specific Themes<br>+ Changelogs</p><br><p style=\"color:Tomato;\">- Removal of obsolete functions within the code.</p>";
 		try {
 			if(!Fs.existsSync(this.changelog)) {
 				Fs.writeFileSync(this.changelog, currentLog);
-				window.alert(currentLog, "Server Specific Themes 1.1.2");
+				BdApi.alert("Server Specific Themes 1.1.2", currentLog);
 			}
 			else if(Fs.readFileSync(this.changelog) != currentLog) {
 				Fs.writeFileSync(this.changelog, currentLog);
-				window.alert(currentLog, "Server Specific Themes 1.1.2");
+				BdApi.alert("Server Specific Themes 1.1.2", currentLog);
 			}
 		} catch(e) {
-				window.alert(e);
+				BdApi.alert("Server Specific Themes 1.1.2 ", e);
 		}
 	};
     this.setup = function() {
