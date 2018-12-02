@@ -9,7 +9,7 @@ serverTheme.prototype.getDescription = function(){
     return 'Ability to use specific themes on individual servers and channels.';
 };
 serverTheme.prototype.getVersion = function(){
-    return '1.1.2';
+    return '1.1.3';
 };
 serverTheme.prototype.getAuthor = function(){
     return 'IRDeNial, Caesar TheDarkBomber';
@@ -20,6 +20,10 @@ var Fs = require('fs');
 var CLR = false;
 
 serverTheme.prototype.load = function(){
+	try { var Caesar = bdplugins["Caesar Plugin Library"].plugin; }
+	catch(e) {
+		BdApi.alert("Server Specific Themes", "Please Install Caesar Plugin Library to use");
+	}
     /* Variables */
     this.themePath = process.env.APPDATA + "\\BetterDiscord\\themes\\";
 	this.changelog = process.env.APPDATA + "\\BetterDiscord\\plugins\\" + "serverTheme.changelog";
@@ -86,18 +90,18 @@ serverTheme.prototype.load = function(){
         }
     };
 	this.checkchangelog = function() {
-		var currentLog = "Changelog for SST Yugoslavia Update (1.1.2):\n+ Channel Specific Themes\n+ Changelogs\n- Removal of obsolete functions within the code.";
+		var currentLog = "¦HChangelog for SST ¦B<i>Yugoslavia Update</i>¦h (1.1.2):¦l¦A+ Channel Specific Themes¦l+ Changelogs¦p¦l¦R- Removal of obsolete functions within the code.¦p";
 		try {
 			if(!Fs.existsSync(this.changelog)) {
 				Fs.writeFileSync(this.changelog, currentLog);
-				window.alert(currentLog, "Server Specific Themes 1.1.2");
+				Caesar.Alert("Server Specific Themes 1.1.2", currentLog);
 			}
 			else if(Fs.readFileSync(this.changelog) != currentLog) {
 				Fs.writeFileSync(this.changelog, currentLog);
-				window.alert(currentLog, "Server Specific Themes 1.1.2");
+				Caesar.Alert("Server Specific Themes 1.1.2", currentLog);
 			}
 		} catch(e) {
-				window.alert(e);
+				Caesar.Alert("Server Specific Themes 1.1.2 ", e);
 		}
 	};
     this.setup = function() {
